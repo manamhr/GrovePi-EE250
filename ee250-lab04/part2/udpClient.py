@@ -1,12 +1,14 @@
 import socket
-
+import grovepi
 def Main():
     # Change the host and port as needed. For ports, use a number in the 9000 
     # range. 
-    host = '127.0.0.1'
-    port = 1024
+    host = '10.0.2.15'
+    port = 9006
+    ultrasonic_ranger = 4
 
-    server_addr = '127.0.0.1'
+
+    server_addr = '192.168.1.235'
 
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) 
     s.bind((host,port))
@@ -24,8 +26,17 @@ def Main():
         data, addr = s.recvfrom(1024)
         data = data.decode('utf-8')
         print("Received from server: " + data)
-        dst_port = input("destination port-> ")
-        message = input("message-> ")
+        dst_port = 9006
+        try:
+       
+             message = (grovepi.ultrasonicRead(ultrasonic_ranger))
+    except TypeError:
+        print ("Error")
+    except IOError:
+        print ("Error")
+
+
+
     s.close()
 
 if __name__ == '__main__':
