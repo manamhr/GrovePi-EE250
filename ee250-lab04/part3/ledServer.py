@@ -7,19 +7,21 @@ import sys
 
 #import sys
 import socket
-#sys.path.append('../../Software/Python/')
-
+sys.path.append('../../Software/Python/')
+import grovepi
 import time
-#from grovepi import *
+from grovepi import *
 
 #from grovepi import *
 
-led = 3
+led = 2
+pinMode =(led, "OUTPUT")
+time.sleep(1)
 
 def Main():
-	host = '192.168.1.237'
-	port = 5000
-	server_addr='192.168.1.237'
+	host = '192.168.1.112'
+	port = 9006
+	#server_addr='192.168.1.237'
 	s = socket.socket()
 	s.bind((host,port))
 
@@ -32,17 +34,13 @@ def Main():
 		#execfile('../../Software/Python/grove_led_blink.py')
 		data = c.recv(1024).decode('utf-8')
 		if data == "LED_ON":
-			try:
-				digitalWrite(led, 1)
-				data = "LED on"
-				#time.sleep(1)
-
+			digitalWrite(led, 1)
+			print("LED on")
+			time.sleep(1)
 		elif data == "LED_OFF":
-			try:
-				digitalWrite(led, 0)
-				print("LED off")
-				#time.sleep(1)
-
+			digitalWrite(led, 0)
+			print("LED off")
+			time.sleep(1)
 		c.send(data.encode('utf-8'))
 	c.close()
 
