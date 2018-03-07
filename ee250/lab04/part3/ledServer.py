@@ -1,5 +1,6 @@
 import sys
 # By appending the folder of all the GrovePi libraries to the system path here,
+<<<<<<< HEAD:ee250-lab04/part3/ledServer.py
 # we are successfully `from grovepi import *`
 #sys.path.append('../../Software/Python/')
 
@@ -42,6 +43,10 @@ def Main():
 				digitalWrite(led, 0)
 				print("LED off")
 				#time.sleep(1)
+=======
+# we are successfully `import grovepi`
+sys.path.append('../../../Software/Python/')
+>>>>>>> upstream/sp18-master:ee250/lab04/part3/ledServer.py
 
 		c.send(data.encode('utf-8'))
 	c.close()

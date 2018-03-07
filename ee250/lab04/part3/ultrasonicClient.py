@@ -1,7 +1,13 @@
 import socket
 import sys
+<<<<<<< HEAD:ee250-lab04/part3/ultrasonicClient.py
 
 sys.path.append('../../Software/Python/')
+=======
+# By appending the folder of all the GrovePi libraries to the system path here,
+# we are able to successfully `import grovepi`
+sys.path.append('../../../Software/Python/')
+>>>>>>> upstream/sp18-master:ee250/lab04/part3/ultrasonicClient.py
 
 
 import grovepi
