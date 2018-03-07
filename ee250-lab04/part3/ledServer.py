@@ -17,9 +17,9 @@ import time
 led = 3
 
 def Main():
-	host = '192.168.1.237'
-	port = 5000
-	server_addr='192.168.1.237'
+	host = '10.0.2.15'
+	port = 9006
+	#server_addr='192.168.1.237'
 	s = socket.socket()
 	s.bind((host,port))
 
@@ -32,17 +32,11 @@ def Main():
 		#execfile('../../Software/Python/grove_led_blink.py')
 		data = c.recv(1024).decode('utf-8')
 		if data == "LED_ON":
-			try:
-				digitalWrite(led, 1)
-				data = "LED on"
-				#time.sleep(1)
-
+			digitalWrite(led, 1)
+			data = "LED on"
 		elif data == "LED_OFF":
-			try:
-				digitalWrite(led, 0)
-				print("LED off")
-				#time.sleep(1)
-
+			digitalWrite(led, 0)
+			print("LED off")
 		c.send(data.encode('utf-8'))
 	c.close()
 
