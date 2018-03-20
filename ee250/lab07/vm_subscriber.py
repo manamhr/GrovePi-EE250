@@ -25,7 +25,7 @@ def on_message(client, userdata, msg):
 def custom_callback_ultrasonic(client, userdata, message):
     ultrasonic = str(message.payload)
     print("custom_callback_ultrasonic: " + message.topic + " " + str(message.payload))
-    print("custom_callback_ultrasonic: message.payload is type " + str(type(message.payload)))$
+    print("custom_callback_ultrasonic: message.payload is type " + str(type(message.payload)))
                                 
 def custom_callback_button(client, userdata, message):
     print(str(message.payload))
