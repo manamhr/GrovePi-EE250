@@ -10,7 +10,8 @@ import groverpi
 from grove_rpg_lcd import *
 
 led=3
-ultraSonic=4
+
+#ultraSonic=4
 button=5
 
 def on_connect(client, userdata, flags, rc):
