@@ -12,7 +12,6 @@ def on_connect(client, userdata, flags, rc):
     
     client.subscribe("anrg-pi6/unltrasonicRanger")
     client.message_callback_add("anrg-pi6/ultrasonicRanger", custom_callback_ultrasonic)
-                                
     client.subscribe("anrg-pi6/button")
     client.message_callback_add("anrg-pi6/button", custom_callback_button)
                                 
@@ -37,9 +36,8 @@ if __name__ == '__main__':
     client.on_connect = on_connect
     client.connect(host="eclipse.usc.edu", port=11000, keepalive=60)
     client.loop_start()
-
+    
     while True:
         print("delete this line")
-        time.sleep(1)
-            
+        time.sleep(1)    
 
