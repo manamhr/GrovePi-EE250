@@ -31,7 +31,7 @@ def callback_led(client,userdata, msg):
 	if ("LED_ON" in str(msg.payload)):
 		try:
 			digitalWrite(led,1)
-			print("callback_led:"+msg.topic+" " +std(msg.payload))
+			print("callback_led:"+msg.topic+" " +str(msg.payload))
 			print("callback_led:msg.payload has a type of : " + str(type(msg.payload)))
 	elif("LED_OFF" in str(msg.payload)):
 		try:
