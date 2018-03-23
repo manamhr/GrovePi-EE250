@@ -24,9 +24,9 @@ def on_connect(client, userdata, flags, rc):
 
 #Default message callback. Please use custom callbacks.
 def on_message(client, userdata, msg):
-	print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8")
+	print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
 
-def callback_led(client,userdata, msg):
+def callback_led(client, userdata, msg):
 	if ("LED_ON" in str(msg.payload, "utf-8")):
 		try:
 			digitalWrite(led,1)
@@ -47,7 +47,7 @@ def callback_led(client,userdata, msg):
 
 
 def callback_lcd(client, userdata,msg):
-	setText(str(msg.payload)
+	setText(str(msg.payload))
 if __name__ == '__main__':
     #this section is covered in publisher_and_subscriber_example.py
 	client = mqtt.Client()
@@ -55,6 +55,7 @@ if __name__ == '__main__':
 	client.on_connect = on_connect
 	client.connect(host="eclipse.usc.edu", port=11000, keepalive=60)
 	client.loop_start()
+	
 	
 	while True:
 		
@@ -64,5 +65,6 @@ if __name__ == '__main__':
 
 		client.publish("anrg-pi6/ultraSonicRanger", grovepi.ultrasonicRead(ultraSonic)
 		time.sleep(1)
+		
             
 
