@@ -9,7 +9,7 @@ import paho.mqtt.client as mqtt
 import time
 sys.path.append('../../Software/Python/')
 import grovepi
-#from grovepi import *
+from grovepi import *
 from grove_rgb_lcd import *
 
 global led, ultraSonic, button
