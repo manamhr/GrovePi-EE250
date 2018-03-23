@@ -39,6 +39,6 @@ if __name__ == '__main__':
     
     while True:
         True
-        #print(str(ultrasonic))
+        print(str(ultrasonic))
         #time.sleep(1)    
 
