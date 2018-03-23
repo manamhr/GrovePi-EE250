@@ -38,7 +38,7 @@ if __name__ == '__main__':
     client.loop_start()
     
     while True:
-        True
+        #True
         print(str(ultrasonic))
-        #time.sleep(1)    
+        time.sleep(1)    
 
