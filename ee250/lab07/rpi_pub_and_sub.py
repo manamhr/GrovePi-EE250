@@ -7,7 +7,6 @@ import socket
 import paho.mqtt.client as mqtt
 #import RPi.GPIO as GPIO
 import time
-from pynput import keyboard
 sys.path.append('../../Software/Python/')
 import grovepi
 #from grovepi import *
@@ -54,6 +53,8 @@ def callback_led(client, userdata, msg):
 
 def callback_lcd(client, userdata,msg):
 	setText(str(msg.payload))
+
+	
 if __name__ == '__main__':
 	#this section is covered in publisher_and_subscriber_example.py
 	client = mqtt.Client()
