@@ -15,7 +15,7 @@ from grove_rgb_lcd import *
 global led, ultraSonic, button
 led=3
 ultraSonic=4
-button=5
+button=7
 
 def on_connect(client, userdata, flags, rc):
 	print("Connected to server (i.e., broker) with result code "+str(rc))
