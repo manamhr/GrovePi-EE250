@@ -34,26 +34,26 @@ def on_message(client, userdata, msg):
 def callback_led(client, userdata, msg):
 	print("test")
 	if ("LED_ON" in str(msg.payload, "utf-8")):
-		try:
-			digitalWrite(led,1)
-			print("LED on")
+		#try:
+		digitalWrite(led,1)
+		print("LED on")
 			#print("callback_led:" + msg.topic + " " + str(msg.payload,"utf-8"))
 			#print("callback_led:msg.payload  has a type of : " + str(type(msg.payload, "utf-8")))
 			#print("callback_led:"+msg.topic+" " +str(msg.payload, "utf-8"))
 			#print("callback_led:msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
-		except IOError:
-			print("You have an Error!!")
+		#except IOError:
+		#	print("You have an Error!!")
 
 	elif("LED_OFF" in str(msg.payload, "utf-8")):
-		try:
-			digitalWrite(led,0)
-			print("LED off")
+		#try:
+		digitalWrite(led,0)
+		print("LED off")
 			#print("callback_led:" + msg.topic + " " + str(msg.payload, "utf-8"))
 			#print("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
 			#print("callback_led:" +msg.topic+" " +str(msg.payload, "utf-8"))
 			#print("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
-		except IOError:
-			print("You have an Error!!")
+		#except IOError:
+		#	print("You have an Error!!")
 			
 	print("test2")
 	print("callback_led:" + msg.topic + " " + str(msg.payload, "utf-8"))
