@@ -3,7 +3,7 @@ import sys
 
 Run rpi_pub_and_sub.py on your Raspberry Pi."""
 
-import socket
+#import socket
 import paho.mqtt.client as mqtt
 #import RPi.GPIO as GPIO
 import time
@@ -18,8 +18,8 @@ ultraSonic=4
 button=7
 
 def on_connect(client, userdata, flags, rc):
-	print("Connected to server (i.e., broker) with result code "+str(rc))
-	grovepi.pinMode(button, "Press a button")
+	print("Connected to server/broker with result code "+str(rc))
+	grovepi.pinMode(button, "INPUT") #button is an input
 	client.subscribe("anrg-pi6/led")
 	client.msg_callback("anrg-pi6/led", callback_led)
 	client.subscribe("anrg-pi6/lcd")
@@ -28,31 +28,34 @@ def on_connect(client, userdata, flags, rc):
 
 #Default message callback. Please use custom callbacks.
 def on_message(client, userdata, msg):
-	print("on_message: " + msg.topic + " " + str(msg.payload, "utf-8"))
+	print("On message: " + msg.topic + " " + str(msg.payload, "utf-8")) #changed this
 
 def callback_led(client, userdata, msg):
 	if ("LED_ON" in str(msg.payload, "utf-8")):
 		try:
 			digitalWrite(led,1)
-			print("callback_led:" + msg.topic + " " + str(msg.payload,"utf-8"))
-			print("callback_led:msg.payload  has a type of : " + str(type(msg.payload, "utf-8")))
-			print("callback_led:"+msg.topic+" " +str(msg.payload, "utf-8"))
-			print("callback_led:msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
+			#print("callback_led:" + msg.topic + " " + str(msg.payload,"utf-8"))
+			#print("callback_led:msg.payload  has a type of : " + str(type(msg.payload, "utf-8")))
+			#print("callback_led:"+msg.topic+" " +str(msg.payload, "utf-8"))
+			#print("callback_led:msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
 		except IOError:
-			print ("You have Error!!")
+			print ("You have an Error!!")
 
 	elif("LED_OFF" in str(msg.payload, "utf-8")):
 		try:
 			digitalWrite(led,0)
-			print("callback_led:" + msg.topic + " " + str(msg.payload, "utf-8"))
-			print ("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
-			print("callback_led:" +msg.topic+" " +str(msg.payload, "utf-8"))
-			print ("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
+			#print("callback_led:" + msg.topic + " " + str(msg.payload, "utf-8"))
+			#print("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
+			#print("callback_led:" +msg.topic+" " +str(msg.payload, "utf-8"))
+			#print("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
 		except IOError:
-			print ("You have Error!!")
+			print("You have an Error!!")
+			
+	print("callback_led:" + msg.topic + " " + str(msg.payload, "utf-8"))
+	print("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
 
 def callback_lcd(client, userdata,msg):
-	setText(str(msg.payload))
+	setText(str(msg.payload, "utf-8"))
 
 
 if __name__ == '__main__':
