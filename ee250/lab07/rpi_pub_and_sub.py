@@ -54,7 +54,7 @@ def callback_led(client, userdata, msg):
 def callback_lcd(client, userdata,msg):
 	setText(str(msg.payload))
 
-	
+
 if __name__ == '__main__':
 	#this section is covered in publisher_and_subscriber_example.py
 	client = mqtt.Client()
@@ -70,7 +70,7 @@ if __name__ == '__main__':
 			client.publish("anrg-pi6/button", "Button pressed!")
 			setText("Button Pressed!")
 
-		client.publish("anrg-pi6/ultraSonicRanger", grovepi.ultrasonicRead(ultraSonicRanger))
+		client.publish("anrg-pi6/ultrasonicRanger", grovepi.ultrasonicRead(ultrasonicRanger))
 		time.sleep(1) #timer
 
             
