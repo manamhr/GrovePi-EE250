@@ -63,11 +63,17 @@ def callback_lcd(client, userdata,msg):
 
 if __name__ == '__main__':
 	#this section is covered in publisher_and_subscriber_example.py
+	print("hi")
 	client = mqtt.Client()
+	print("yo")
 	client.on_message = on_message
+	print("boy")
 	client.on_connect = on_connect
+	print("hey")
 	client.connect(host="eclipse.usc.edu", port=11000, keepalive=60)
+	print("yo2")
 	client.loop_start()
+	print("hey2")
 	
 	
 	while True:
