@@ -70,7 +70,7 @@ if __name__ == '__main__':
 			client.publish("anrg-pi6/button", "Button pressed!")
 			setText("Button Pressed!")
 
-		client.publish("anrg-pi6/ultrasonicRanger", grovepi.ultrasonicRead(ultrasonicRanger))
+		client.publish("anrg-pi6/ultrasonicRanger", grovepi.ultrasonicRead(ultraSonic))
 		time.sleep(1) #timer
 
             
