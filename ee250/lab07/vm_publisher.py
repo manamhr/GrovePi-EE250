@@ -14,6 +14,10 @@ def on_connect(client, userdata, flags, rc):
 #Default message callback. Please use custom callbacks.
 def on_message(client, userdata, msg):
 	print("on_message: " + msg.topic + " " + str(msg.payload))
+	
+def callback_led(client, userdata, msg):
+	print("callback_led:" + msg.topic + " " + str(msg.payload, "utf-8"))
+	print("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
 
 def on_press(key):
 	try:
