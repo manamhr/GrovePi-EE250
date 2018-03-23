@@ -55,6 +55,7 @@ def callback_led(client, userdata, msg):
 		#except IOError:
 		#	print("You have an Error!!")
 			
+	client.message_callback_add("anrg-pi6/led", callback_led)
 	print("test2")
 	print("callback_led:" + msg.topic + " " + str(msg.payload, "utf-8"))
 	print("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
