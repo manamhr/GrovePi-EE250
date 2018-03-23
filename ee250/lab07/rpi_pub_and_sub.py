@@ -17,9 +17,11 @@ led=3
 ultraSonic=4
 button=7
 
+grovepi.pinMode(button, "INPUT")
+grovepi.pinMode(led, "OUTPUT")
+
 def on_connect(client, userdata, flags, rc):
 	print("Connected to server/broker with result code "+str(rc))
-	grovepi.pinMode(button, "INPUT") #button is an input
 	client.subscribe("anrg-pi6/led")
 	client.message_callback_add("anrg-pi6/led", callback_led)
 	#client.subscribe("anrg-pi6/lcd")
@@ -31,11 +33,14 @@ def on_message(client, userdata, msg):
 	print("On message: " + msg.topic + " " + str(msg.payload, "utf-8")) #changed this
 
 def callback_led(client, userdata, msg):
-	print("test")
+	print("callback_led:" + msg.topic + " " + str(msg.payload, "utf-8"))
+	print("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
+	
 	if ("LED_ON" in str(msg.payload, "utf-8")):
 		#try:
 		digitalWrite(3 ,1)
 		print("LED on")
+		time.sleep(1)
 			#print("callback_led:" + msg.topic + " " + str(msg.payload,"utf-8"))
 			#print("callback_led:msg.payload  has a type of : " + str(type(msg.payload, "utf-8")))
 			#print("callback_led:"+msg.topic+" " +str(msg.payload, "utf-8"))
@@ -47,6 +52,7 @@ def callback_led(client, userdata, msg):
 		#try:
 		digitalWrite(3 ,0)
 		print("LED off")
+		time.sleep(1)
 			#print("callback_led:" + msg.topic + " " + str(msg.payload, "utf-8"))
 			#print("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
 			#print("callback_led:" +msg.topic+" " +str(msg.payload, "utf-8"))
@@ -56,8 +62,6 @@ def callback_led(client, userdata, msg):
 			
 	#client.message_callback_add("anrg-pi6/led", callback_led)
 	print("test2")
-	print("callback_led:" + msg.topic + " " + str(msg.payload, "utf-8"))
-	print("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
 
 def callback_lcd(client, userdata,msg):
 	setText(str(msg.payload, "utf-8"))
