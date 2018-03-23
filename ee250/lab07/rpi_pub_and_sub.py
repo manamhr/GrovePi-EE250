@@ -36,7 +36,9 @@ def callback_led(client, userdata, msg):
 	print("callback_led:" + msg.topic + " " + str(msg.payload, "utf-8"))
 	print("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
 	
-	if ("LED_ON" in str(msg.payload, "utf-8")):
+	data = str(msg.payload, "utf-8")
+	
+	if (data == "LED_ON"):
 		#try:
 		digitalWrite(3 ,1)
 		print("LED on")
@@ -48,7 +50,7 @@ def callback_led(client, userdata, msg):
 		#except IOError:
 		#	print("You have an Error!!")
 
-	elif("LED_OFF" in str(msg.payload, "utf-8")):
+	elif(data == "LED_OFF"):
 		#try:
 		digitalWrite(3 ,0)
 		print("LED off")
