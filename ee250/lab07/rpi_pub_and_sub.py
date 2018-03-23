@@ -24,8 +24,8 @@ def on_connect(client, userdata, flags, rc):
 	print("Connected to server/broker with result code "+str(rc))
 	client.subscribe("anrg-pi6/led")
 	client.message_callback_add("anrg-pi6/led", callback_led)
-	#client.subscribe("anrg-pi6/lcd")
-	#client.message_callback_add("anrg-pi6/lcd", callback_lcd)
+	client.subscribe("anrg-pi6/lcd")
+	client.message_callback_add("anrg-pi6/lcd", callback_lcd)
     #subscribe to topics of interest here
 
 #Default message callback. Please use custom callbacks.
@@ -34,7 +34,6 @@ def on_message(client, userdata, msg):
 
 def callback_led(client, userdata, msg):
 	print("callback_led:" + msg.topic + " " + str(msg.payload, "utf-8"))
-	print("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
 	
 	data = str(msg.payload, "utf-8")
 	
