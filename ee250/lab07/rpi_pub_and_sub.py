@@ -32,6 +32,7 @@ def on_message(client, userdata, msg):
 	print("On message: " + msg.topic + " " + str(msg.payload, "utf-8")) #changed this
 
 def callback_led(client, userdata, msg):
+	print("test")
 	if ("LED_ON" in str(msg.payload, "utf-8")):
 		try:
 			digitalWrite(led,1)
@@ -54,6 +55,7 @@ def callback_led(client, userdata, msg):
 		except IOError:
 			print("You have an Error!!")
 			
+	print("test2")
 	print("callback_led:" + msg.topic + " " + str(msg.payload, "utf-8"))
 	print("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
 
