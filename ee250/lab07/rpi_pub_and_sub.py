@@ -81,9 +81,12 @@ if __name__ == '__main__':
 		if (grovepi.digitalRead(button)>0):
 			client.publish("anrg-pi6/button", "Button pressed!")
 			setText("Button Pressed!")
+			print("boyy")
 
 		client.publish("anrg-pi6/ultrasonicRanger", grovepi.ultrasonicRead(4))
+		print("dnas")
 		time.sleep(1) #timer
+		print("dask")
 
             
 
