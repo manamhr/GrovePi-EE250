@@ -1,14 +1,19 @@
+import sys
 """EE 250L Lab 07 Skeleton Code
 
 Run rpi_pub_and_sub.py on your Raspberry Pi."""
 
+import socket
 import paho.mqtt.client as mqtt
+#import RPi.GPIO as GPIO
 import time
 from pynput import keyboard
-from grovepi import *
+sys.path.append('../../Software/Python/')
 import grovepi
+#from grovepi import *
 from grove_rgb_lcd import *
 
+global led, ultraSonic, button
 led=3
 ultraSonic=4
 button=5
@@ -30,26 +35,27 @@ def callback_led(client, userdata, msg):
 	if ("LED_ON" in str(msg.payload, "utf-8")):
 		try:
 			digitalWrite(led,1)
-
-	        print("callback_led:" + msg.topic + " " + str(msg.payload,"utf-8"))
-        	print("callback_led:msg.payload  has a type of : " + str(type(msg.payload, "utf-8")))
-
+			print("callback_led:" + msg.topic + " " + str(msg.payload,"utf-8"))
+			print("callback_led:msg.payload  has a type of : " + str(type(msg.payload, "utf-8")))
 			print("callback_led:"+msg.topic+" " +str(msg.payload, "utf-8"))
 			print("callback_led:msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
+		except IOError:
+			print ("You have Error!!")
 
 	elif("LED_OFF" in str(msg.payload, "utf-8")):
 		try:
 			digitalWrite(led,0)
-	        print("callback_led:" + msg.topic + " " + str(msg.payload, "utf-8"))
-        	print ("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
+			print("callback_led:" + msg.topic + " " + str(msg.payload, "utf-8"))
+			print ("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
 			print("callback_led:" +msg.topic+" " +str(msg.payload, "utf-8"))
 			print ("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
-
+		except IOError:
+			print ("You have Error!!")
 
 def callback_lcd(client, userdata,msg):
 	setText(str(msg.payload))
 if __name__ == '__main__':
-    #this section is covered in publisher_and_subscriber_example.py
+	#this section is covered in publisher_and_subscriber_example.py
 	client = mqtt.Client()
 	client.on_message = on_message
 	client.on_connect = on_connect
@@ -63,8 +69,8 @@ if __name__ == '__main__':
 			client.publish("anrg-pi6/button", "Button pressed!")
 			setText("Button Pressed!")
 
-		client.publish("anrg-pi6/ultraSonicRanger", grovepi.ultrasonicRead(ultraSonic)
-		time.sleep(1)
-		
+		client.publish("anrg-pi6/ultraSonicRanger", grovepi.ultrasonicRead(ultraSonicRanger))
+		time.sleep(1) #timer
+
             
 
