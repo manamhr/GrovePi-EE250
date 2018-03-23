@@ -84,7 +84,7 @@ if __name__ == '__main__':
 			print("boyy")
 
 		client.publish("anrg-pi6/ultrasonicRanger", grovepi.ultrasonicRead(4))
-		print(grovepi.ultrasonicRead)
+		print(grovepi.ultrasonicRead(4))
 		time.sleep(1) #timer
 		print("dask")
 
