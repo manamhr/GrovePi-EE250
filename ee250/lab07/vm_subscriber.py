@@ -5,8 +5,6 @@ Run vm_subscriber.py in a separate terminal on your VM."""
 import paho.mqtt.client as mqtt
 import time
 
-#ultrasonic = " "
-
 def on_connect(client, userdata, flags, rc):
     print("Connected to server (i.e., broker) with result code "+str(rc))
     
@@ -22,7 +20,6 @@ def on_message(client, userdata, msg):
     print("on_message: " + msg.topic + " " + str(msg.payload))
                                 
 def custom_callback_ultrasonic(client, userdata, message):
-    #ultrasonic = str(message.payload, "utf-8")
     print("ultrasonic: " + str(message.payload, "utf-8"))
                                 
 def custom_callback_button(client, userdata, message):
@@ -37,7 +34,5 @@ if __name__ == '__main__':
     client.loop_start()
     
     while True:
-        #True
-        #print(str(ultrasonic))
         time.sleep(1)    
 
