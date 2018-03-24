@@ -3,9 +3,7 @@ import sys
 
 Run rpi_pub_and_sub.py on your Raspberry Pi."""
 
-#import socket
 import paho.mqtt.client as mqtt
-#import RPi.GPIO as GPIO
 import time
 sys.path.append('../../Software/Python/')
 import grovepi
@@ -38,35 +36,19 @@ def callback_led(client, userdata, msg):
 	data = str(msg.payload, "utf-8")
 	
 	if (data == "LED_ON"):
-		#try:
 		digitalWrite(3 ,1)
 		print("LED on")
 		time.sleep(1)
-			#print("callback_led:" + msg.topic + " " + str(msg.payload,"utf-8"))
-			#print("callback_led:msg.payload  has a type of : " + str(type(msg.payload, "utf-8")))
-			#print("callback_led:"+msg.topic+" " +str(msg.payload, "utf-8"))
-			#print("callback_led:msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
-		#except IOError:
-		#	print("You have an Error!!")
 
 	elif(data == "LED_OFF"):
-		#try:
 		digitalWrite(3 ,0)
 		print("LED off")
 		time.sleep(1)
-			#print("callback_led:" + msg.topic + " " + str(msg.payload, "utf-8"))
-			#print("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
-			#print("callback_led:" +msg.topic+" " +str(msg.payload, "utf-8"))
-			#print("callback_led: msg.payload has a type of : " + str(type(msg.payload, "utf-8")))
-		#except IOError:
-		#	print("You have an Error!!")
-			
-	#client.message_callback_add("anrg-pi6/led", callback_led)
+
 	print("test2")
 
 def callback_lcd(client, userdata,msg):
 	setText(str(msg.payload, "utf-8"))
-
 
 if __name__ == '__main__':
 	#this section is covered in publisher_and_subscriber_example.py
@@ -77,6 +59,7 @@ if __name__ == '__main__':
 	client.loop_start()
 	
 	setRGB(0,0,255)
+	
 	while True:
 		
 		if (grovepi.digitalRead(button)>0):
