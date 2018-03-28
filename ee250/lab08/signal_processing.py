@@ -39,6 +39,47 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg): 
     print(msg.topic + " " + str(msg.payload))
 
+def move_index_left(array):
+    for i in range(0, len(array) - 1):
+        array[i] = array[i+1]
+
+def average(array, grab):
+    sum = 0
+    if(len(array) > grab):
+        for i in range(len(array) - grab, len(array)):
+            sum = sum + array[i]
+        return sum/grab
+    else:
+        return 0
+
+def printlol(array):
+    for i in range(0, len(array)):
+        print(array[i])
+
+
+def moving_avg_buffer(mab, array, grab):
+    move_index_left(mab)
+    average_array = average(array, grab)
+    mab[len(mab) - 1] = average_array
+
+def difference(diff_array, dist_array):
+    move_index_left(diff_array)
+
+    #added this, now numbers are shit lol
+    #created bc problems if diff array is smaller than dist_array
+    #for now, try to make them the same, use mab
+    size = len(dist_array)
+    if(size > len(diff_array)):
+        size = len(diff_array)
+
+
+    for i in range(0,size-1):
+        array_difference = dist_array[i+1] - dist_array[i]
+        if(abs(array_difference) < 0.5):
+            diff_array[i] = 0
+        else:
+            diff_array[i] = array_difference
+
 if __name__ == '__main__':
     # Connect to broker and start loop    
     client = mqtt.Client()
@@ -46,6 +87,9 @@ if __name__ == '__main__':
     client.on_message = on_message
     client.connect(broker_hostname, broker_port, 60)
     client.loop_start()
+
+    mab=[0,0,0,0,0,0,0,0,0,0]
+    diff=[0,0,0,0,0,0,0,0,0,0]
 
     while True:
         """ You have two lists, ranger1_dist and ranger2_dist, which hold a window
@@ -58,7 +102,16 @@ if __name__ == '__main__':
         
         # TODO: detect movement and/or position
         
-        print("ranger1: " + str(ranger1_dist[-1:]) + ", ranger2: " + 
-            str(ranger2_dist[-1:])) 
+        
+        print("ranger1: " + str(ranger1_dist[-1:]))#s + ", ranger2: ")
+        #print(len(ranger1_dist))
+        moving_avg_buffer(mab, ranger1_dist, 10)
+        #print(mab[len(mab)-1])
+        ranger_one = ranger1_dist[-1:]
+        difference(diff, mab)
+        print('%.1f' % diff[8])
+        str(ranger1_dist[-1:])
+
+        print()
         
         time.sleep(0.2)
