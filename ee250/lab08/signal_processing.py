@@ -16,14 +16,21 @@ ranger2_dist = []
 
 def ranger1_callback(client, userdata, msg):
     global ranger1_dist
-    ranger1_dist.append(int(msg.payload))
-    #truncate list to only have the last MAX_LIST_LENGTH values
+    if(int(msg.payload) <= 125):
+        ranger1_dist.append(int(msg.payload))
+        #truncate list to only have the last MAX_LIST_LENGTH values
+    else:
+        ranger1_dist.append(125)
     ranger1_dist = ranger1_dist[-MAX_LIST_LENGTH:]
+
 
 def ranger2_callback(client, userdata, msg):
     global ranger2_dist
-    ranger2_dist.append(int(msg.payload))
-    #truncate list to only have the last MAX_LIST_LENGTH values
+    if(int(msg.payload) <= 125):
+        ranger2_dist.append(int(msg.payload))
+        #truncate list to only have the last MAX_LIST_LENGTH values
+    else:
+        ranger2_dist.append(125)
     ranger2_dist = ranger2_dist[-MAX_LIST_LENGTH:]
 
 # The callback for when the client receives a CONNACK response from the server.
@@ -80,6 +87,46 @@ def difference(diff_array, dist_array):
         else:
             diff_array[i] = array_difference
 
+def location(mab1, mab2, small, big):
+
+    #LEFT
+    #small = 25?
+    #tlarge = 100?
+    if( (mab1[len(mab1)-1] <= small) & (mab2[len(mab2)-1] >= big) ):
+        return "Still-Left"
+    elif( (mab1[len(mab1)-1] >= big) & (mab2[len(mab2)-1] <= small) ):
+        return "Still-Right"
+    elif( (mab1[len(mab1)-1] <= big) & (mab2[len(mab2)-1] <= big) ):
+        return "Still-Middle"
+    else:
+        return "bad :((("
+
+
+#USE def location to help with the values.
+#JDI;SFHS;AOFGHIEWARIUGH;PFAEIOWHNFG;WIQFHKBWER;IFGHEWA;IFGEWA;FUAEWGHFPEORWA;HFGAW;OIAEHRLFGIEWAUGBFLWAIFGUHAERIGHKRWA;
+def movement(diff1, diff2):
+    if( (abs(diff1[len(diff1)-1]) < 2) & (abs(diff2[len(diff2)-1]) < 2) ):
+        return "no move"
+
+    elif( (diff1[len(diff1)-1] > 3) & (diff2[len(diff2)-1] < -3) ):
+        return "Moving Right"
+    elif( (diff2[len(diff2)-1] > 3) & (diff1[len(diff1)-1] < -3) ):
+        return "Moving Left"
+
+    elif( (diff1[len(diff1)-1] > 3) ):
+        return "Moving Right"
+    elif( (diff2[len(diff2)-1] > 3) ):
+        return "Moving Left"
+
+    elif( (diff1[len(diff1)-1] < -3) ):
+        return "Moving Left"
+    elif( (diff2[len(diff2)-1] < -3) ):
+        return "Moving Right"
+
+    else:
+        return "garbo values"
+
+
 if __name__ == '__main__':
     # Connect to broker and start loop    
     client = mqtt.Client()
@@ -88,8 +135,13 @@ if __name__ == '__main__':
     client.connect(broker_hostname, broker_port, 60)
     client.loop_start()
 
-    mab=[0,0,0,0,0,0,0,0,0,0]
-    diff=[0,0,0,0,0,0,0,0,0,0]
+    mab1=[0,0,0,0,0,0,0,0,0,0]
+    diff1=[0,0,0,0,0,0,0,0,0,0]
+    diff_mab1=[0,0,0,0,0,0,0,0,0,0]
+
+    mab2=[0,0,0,0,0,0,0,0,0,0]
+    diff2=[0,0,0,0,0,0,0,0,0,0]
+    diff_mab2=[0,0,0,0,0,0,0,0,0,0]
 
     while True:
         """ You have two lists, ranger1_dist and ranger2_dist, which hold a window
@@ -103,15 +155,34 @@ if __name__ == '__main__':
         # TODO: detect movement and/or position
         
         
-        print("ranger1: " + str(ranger1_dist[-1:]))#s + ", ranger2: ")
-        #print(len(ranger1_dist))
-        moving_avg_buffer(mab, ranger1_dist, 10)
-        #print(mab[len(mab)-1])
-        ranger_one = ranger1_dist[-1:]
-        difference(diff, mab)
-        print('%.1f' % diff[8])
-        str(ranger1_dist[-1:])
 
+        print("dist: " + str(ranger1_dist[-1:]) + " " + str(ranger2_dist[-1:]))
+        
+        #MAB
+        moving_avg_buffer(mab1, ranger1_dist, 5)
+        moving_avg_buffer(mab2, ranger2_dist, 5)
+        print("MAB:     " + str(mab1[len(mab1)-1]) + " " + str(mab2[len(mab2)-1]))
+
+        
+        
+        
+        #Difference:
+        difference(diff1, mab1)
+        difference(diff2, mab2)
+        print("Diff:    " + '%.1f' % diff1[8] + " " + '%.1f' % diff2[8])
+        
+       
+
+        #Difference MAB
+        moving_avg_buffer(diff_mab1, diff1, 6)
+        moving_avg_buffer(diff_mab2, diff2, 6)
+        print("MAB Diff: " + '%.1f' % diff_mab1[len(diff_mab1)-1] + " " + '%.1f' % diff_mab2[len(diff_mab2)-1])
+
+
+        print( location(mab1, mab2, 40, 110) )
+        print( movement(diff_mab1, diff_mab2) )
         print()
+
+        
         
         time.sleep(0.2)
