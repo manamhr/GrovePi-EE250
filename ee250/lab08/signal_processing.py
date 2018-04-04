@@ -1,3 +1,8 @@
+
+
+import requests
+import json
+from datetime import datetime
 import paho.mqtt.client as mqtt
 import time
 
@@ -142,6 +147,16 @@ if __name__ == '__main__':
     mab2=[0,0,0,0,0,0,0,0,0,0]
     diff2=[0,0,0,0,0,0,0,0,0,0]
     diff_mab2=[0,0,0,0,0,0,0,0,0,0]
+    #flask
+    hdr = {
+        'Content-Type': 'application/json',
+        'Authorization': None
+    }
+    #flask
+    payload = {
+        'time': str(datetime.now()),
+        'event': movement(diff1, diff2)
+    }
 
     while True:
         """ You have two lists, ranger1_dist and ranger2_dist, which hold a window
@@ -183,6 +198,10 @@ if __name__ == '__main__':
         print( movement(diff_mab1, diff_mab2) )
         print()
 
+        #flask
+        response = requests.post("http://0.0.0.0:5000/post-event", headers = hdr, data = json.dumps(payload))
+        #flask
+        print (response.json())
         
         
         time.sleep(0.2)
