@@ -111,7 +111,7 @@ def location(mab1, mab2, small, big):
 #JDI;SFHS;AOFGHIEWARIUGH;PFAEIOWHNFG;WIQFHKBWER;IFGHEWA;IFGEWA;FUAEWGHFPEORWA;HFGAW;OIAEHRLFGIEWAUGBFLWAIFGUHAERIGHKRWA;
 def movement(diff1, diff2):
     if( (abs(diff1[len(diff1)-1]) < 2) & (abs(diff2[len(diff2)-1]) < 2) ):
-        return "no move"
+        return location(mab1, mab2, 40, 110)
 
     elif( (diff1[len(diff1)-1] > 3) & (diff2[len(diff2)-1] < -3) ):
         return "Moving Right"
@@ -153,10 +153,10 @@ if __name__ == '__main__':
         'Authorization': None
     }
     #flask
-    payload = {
-        'time': str(datetime.now()),
-        'event': movement(diff1, diff2)
-    }
+    #payload = {
+    #    'time': str(datetime.now()),
+    #    'event': movement(diff1, diff2)
+    #}
 
     while True:
         """ You have two lists, ranger1_dist and ranger2_dist, which hold a window
@@ -177,8 +177,6 @@ if __name__ == '__main__':
         moving_avg_buffer(mab1, ranger1_dist, 5)
         moving_avg_buffer(mab2, ranger2_dist, 5)
         print("MAB:     " + str(mab1[len(mab1)-1]) + " " + str(mab2[len(mab2)-1]))
-
-        
         
         
         #Difference:
@@ -197,10 +195,19 @@ if __name__ == '__main__':
         print( location(mab1, mab2, 40, 110) )
         print( movement(diff_mab1, diff_mab2) )
         print()
+        
+        #flask
+        hdr = {
+        'Content-Type': 'application/json',
+        'Authorization': None
+        }
+        payload = {
+        'time': str(datetime.now()),
+        'event': movement( diff_mab1, diff_mab2)
+        }
 
         #flask
         response = requests.post("http://0.0.0.0:5000/post-event", headers = hdr, data = json.dumps(payload))
-        #flask
         print (response.json())
         
         
