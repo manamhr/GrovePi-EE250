@@ -104,7 +104,7 @@ def location(mab1, mab2, small, big):
     elif( (mab1[len(mab1)-1] <= big) & (mab2[len(mab2)-1] <= big) ):
         return "Still-Middle"
     else:
-        return "bad :((("
+        return "hmmmm"
 
 
 #USE def location to help with the values.
@@ -129,7 +129,7 @@ def movement(diff1, diff2):
         return "Moving Right"
 
     else:
-        return "garbo values"
+        return "hmmmm"
 
 
 if __name__ == '__main__':
