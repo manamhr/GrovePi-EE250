@@ -21,6 +21,12 @@ ranger2_dist = []
 
 def ranger1_callback(client, userdata, msg):
     global ranger1_dist
+    
+    
+    
+    #DETECTS IF HUMAN IS PRESENT
+    
+    #threshold
     if(int(msg.payload) <= 125):
         ranger1_dist.append(int(msg.payload))
         #truncate list to only have the last MAX_LIST_LENGTH values
@@ -51,10 +57,12 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg): 
     print(msg.topic + " " + str(msg.payload))
 
+#move all values left in array
 def move_index_left(array):
     for i in range(0, len(array) - 1):
         array[i] = array[i+1]
 
+#find average of an entire array
 def average(array, grab):
     sum = 0
     if(len(array) > grab):
@@ -64,22 +72,20 @@ def average(array, grab):
     else:
         return 0
 
+#prints the array (for debugging)
 def printlol(array):
     for i in range(0, len(array)):
         print(array[i])
 
-
+#puts average of "array" with length "grab" into the last index of "mab"
 def moving_avg_buffer(mab, array, grab):
     move_index_left(mab)
     average_array = average(array, grab)
     mab[len(mab) - 1] = average_array
 
+#takes difference of each adjacent values for an array
 def difference(diff_array, dist_array):
     move_index_left(diff_array)
-
-    #added this, now numbers are shit lol
-    #created bc problems if diff array is smaller than dist_array
-    #for now, try to make them the same, use mab
     size = len(dist_array)
     if(size > len(diff_array)):
         size = len(diff_array)
@@ -92,11 +98,12 @@ def difference(diff_array, dist_array):
         else:
             diff_array[i] = array_difference
 
+#returns location of human
 def location(mab1, mab2, small, big):
 
     #LEFT
     #small = 25?
-    #tlarge = 100?
+    #big = 100?
     if( (mab1[len(mab1)-1] <= small) & (mab2[len(mab2)-1] >= big) ):
         return "Still-Left"
     elif( (mab1[len(mab1)-1] >= big) & (mab2[len(mab2)-1] <= small) ):
@@ -104,11 +111,11 @@ def location(mab1, mab2, small, big):
     elif( (mab1[len(mab1)-1] <= big) & (mab2[len(mab2)-1] <= big) ):
         return "Still-Middle"
     else:
-        return "hmmmm"
+        #when distances are way too big
+        return "no human present"
 
 
-#USE def location to help with the values.
-#JDI;SFHS;AOFGHIEWARIUGH;PFAEIOWHNFG;WIQFHKBWER;IFGHEWA;IFGEWA;FUAEWGHFPEORWA;HFGAW;OIAEHRLFGIEWAUGBFLWAIFGUHAERIGHKRWA;
+#returns movement of human
 def movement(diff1, diff2):
     if( (abs(diff1[len(diff1)-1]) < 2) & (abs(diff2[len(diff2)-1]) < 2) ):
         return location(mab1, mab2, 40, 110)
@@ -139,14 +146,17 @@ if __name__ == '__main__':
     client.on_message = on_message
     client.connect(broker_hostname, broker_port, 60)
     client.loop_start()
-
+    
+    #values for ranger 1
     mab1=[0,0,0,0,0,0,0,0,0,0]
     diff1=[0,0,0,0,0,0,0,0,0,0]
     diff_mab1=[0,0,0,0,0,0,0,0,0,0]
-
+    
+    #values for ranger 2
     mab2=[0,0,0,0,0,0,0,0,0,0]
     diff2=[0,0,0,0,0,0,0,0,0,0]
     diff_mab2=[0,0,0,0,0,0,0,0,0,0]
+    
     #flask
     hdr = {
         'Content-Type': 'application/json',
