@@ -54,8 +54,8 @@ if __name__ == '__main__':
 			setRGB(0,255,0)
 			setText("Temp:" +t+ "C      " + "Humidity: "  + h + "%")
 
-		except (IOError, TypeError) as e:
-			print "Error"
+		except (IOError,TypeError) as e:
+			print ("Error")
 
 
 
