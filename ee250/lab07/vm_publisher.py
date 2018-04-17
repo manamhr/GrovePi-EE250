@@ -4,11 +4,14 @@ Run vm_publisher.py in a separate terminal on your VM."""
 
 import paho.mqtt.client as mqtt
 import time
+import grovepi
+
 #from pynput import keyboard
 from grovepi import *
 from grove_rgb_lcd import *
 
 #added
+
 dht_sensor_port = 7
 lcd = 8
 led=4

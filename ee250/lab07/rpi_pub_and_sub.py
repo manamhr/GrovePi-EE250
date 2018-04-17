@@ -68,5 +68,21 @@ if __name__ == '__main__':
 
 		client.publish("anrg-pi6/ultrasonicRanger", grovepi.ultrasonicRead(4))
 		print(grovepi.ultrasonicRead(4))
-		time.sleep(1) #timer           
+		time.sleep(1) #timer     
+
+		try: #added
+			[temp, hum] = dht(dht_sensor_port,1) #get temp and hum
+			#print "temp=", temp, "C\thumadity =", hum, "%" 
+			client.publish("anrg-pi6/temperature", temp)
+			client.publish("anrg-pi6/humidity", hum)
+			t = str(temp)
+			h = str(hum)
+
+			setRGB(0,128,64)
+			setRGB(0,255,0)
+			setText("Temp:" +t+ "C      " + "Humidity: "  + h + "%")
+
+		except (IOError,TypeError) as e:
+			print ("Error")
+      
 
