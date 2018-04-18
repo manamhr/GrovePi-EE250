@@ -4,11 +4,11 @@ import grovepi
 from grovepi import *
 from grove_rgb_lcd import *
 
-grovepi.pinMode(led, "OUTPUT")
-
 global led#, button
 led = 3
 dhtPIN = 7
+
+grovepi.pinMode(led, "OUTPUT")
 
 def led_callback(client, userdata, message):
 	if (str(message.payload, "utf-8") == "LED_toggle"):
