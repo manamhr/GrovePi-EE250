@@ -40,6 +40,7 @@ if __name__ == '__main__':
 	client.on_connect = on_connect
 	client.connect(host = "eclipse.usc.edu", port = 11000, keepalive = 60)
 	client.loop_start()
+	pinMode(led, "OUTPUT")
 	time.sleep(1)
 	setRGB(0,0,255)
 
