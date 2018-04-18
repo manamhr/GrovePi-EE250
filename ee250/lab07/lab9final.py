@@ -4,7 +4,7 @@ import grovepi
 from grovepi import *
 from grove_rgb_lcd import *
 
-global led#, button
+global led, dhtPIN
 led = 3
 dhtPIN = 7
 
