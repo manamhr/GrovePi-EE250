@@ -47,6 +47,6 @@ if __name__ == '__main__':
 	while True:
 		[temp, hum] = dht(dhtPIN, 1)
 
-		client.publish("anrg-pi6/temp", str(temp))
-		client.publish("anrg-pi6/hum", str(hum))
+		client.publish("anrg-pi6/temperature", str(temp))
+		client.publish("anrg-pi6/humidity", str(hum))
 		time.sleep(1)
